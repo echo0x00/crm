@@ -3,12 +3,19 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <div class="row no-gitters justify-content">
+            <div class="col-12 col-lg-6 col-md-6">
+                <h1 class="display-4 text-center">CRM</h1>
+            </div>
+        </div>
+    </div>
     <style>
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
-    <a href="{{ path('app_logout')}}">Выйти</a>
+   <!-- <a href="{{ path('app_logout')}}">Выйти</a>
     <div class="example-wrapper">
         <a href="{{ path('users') }}">Пользователи</a>
-    </div>
+    </div>-->
 {% endblock %}

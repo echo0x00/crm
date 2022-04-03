@@ -1,3 +1,12 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+orders:
+  path:     /orders/{page}
+  methods:  [GET,POST]
+  controller: App\Controller\OrdersController::index
+  defaults:
+    page: 1
+  requirements:
+    page: '\d+'

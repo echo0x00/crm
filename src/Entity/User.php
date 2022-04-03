@@ -19,9 +19,19 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAdmin;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $fullName;
 
     /**
      * @ORM\Column(type="json")
@@ -55,6 +65,22 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param mixed $fullName
+     */
+    public function setFullName($fullName): void
+    {
+        $this->fullName = $fullName;
     }
 
     public function getEmail(): ?string
@@ -98,6 +124,22 @@ class User implements UserInterface
         return $this;
     }
 
+    public function addRole(string $role): self
+    {
+        $this->roles[] = $role;
+        return $this;
+    }
+
+    public function removeRole(string $role): self
+    {
+        foreach ($this->getRoles() as $key => $oneRole) {
+            if ($oneRole == $role) {
+                unset($this->roles[$key]);
+            }
+        }
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -131,5 +173,50 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function hasRole($roleName){
+        foreach ($this->getRoles() as $role) {
+            if ($role == $roleName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRoleAdmin()
+    {
+        return ($this->hasRole('ROLE_ADMIN')) ? 'Yes' : null;
+    }
+
+    public function setHasRoleAdmin($isAdmin)
+    {
+        if ('Yes' == $isAdmin) {
+            $this->addRole('ROLE_ADMIN');
+            $this->isAdmin = true;
+        }
+        if ('No' === $isAdmin) {
+            $this->removeRole('ROLE_ADMIN');
+            $this->isAdmin = false;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param mixed $isAdmin
+     */
+    public function setIsAdmin($isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
     }
 }

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Остатки номенклатуры{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <h1 class="display-5 text-center  text-center mt-2 pb-3">
+                Остатки
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row no-gutters justify-content-center mt-3">
+        <div class="col-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <div class="card border-secondary mb-3">
+                <div class="card-header">
+                    <a href="{ path('nomen_create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Дата</th>
+                            {% for nomen in nomen_list %}
+                                <th scope="col" style="background-color: {{ nomen.color }}">{{ nomen.getShortName() }}</th>
+                            {% endfor %}
+                            <!--<th scope="col">Действие</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

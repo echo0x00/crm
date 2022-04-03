@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Покупатели{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <h1 class="display-5 text-center  text-center mt-2 pb-3">
+                    Покупатели
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row no-gutters justify-content-center mt-3">
+            <div class="col-12">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">
+                        <a href=" {{ path('agent_create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ФИО</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Телефон</th>
+                                <th scope="col">Действие</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for agent in agentList %}
+                                <tr>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ agent.fio }}</td>
+                                    <td>{{ agent.email }}</td>
+                                    <td>{{ agent.phone }}</td>
+                                    <td>
+                                        <a title="Изменить" href="{{ path('agent_edit', {'agentId': agent.id }) }}"
+                                           class="btn btn-outline-primary">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                        <a title="Удалить" href="{{ path('agent_remove', {'agentId': agent.id }) }}"
+                                           class="btn btn-outline-danger">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

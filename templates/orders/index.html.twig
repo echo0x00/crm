@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Заказы покупателей{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <h1 class="display-5 text-center  text-center mt-1 pb-4">
+                Заказы
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row no-gutters justify-content-center mt-0">
+        <div class="col-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <div class="card border-secondary mb-3">
+                <div class="card-header">
+                    <a href="{{ path('orders_create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                    <!--<span class="ml-5 mr-4 font-weight-bold">Отбор по параметрам:</span>-->
+                    <form method="post" class="form-inline custom-control-inline float-right mr-0" >
+                        <label for="filter_date" class="mr-2">Дата заказа: </label>
+                        <input class="form-control" type="date" name="filter_date" value="{{ filters.filter_date }}" placeholder="Дата заказа" />
+                        <label for="filter_status" class="ml-2 mr-2">Статус: </label>
+                        <select name="filter_status" class="form-control">
+                            <option value="99"  {% if filters.filter_status == 99 %}selected="selected"{% endif %}>все</option>
+                            <option value="0"  {% if filters.filter_status == 0 %}selected="selected"{% endif %}>новый</option>
+                            <option value="2" {% if filters.filter_status == 2 %}selected="selected"{% endif %}>оплачен</option>
+                            <option value="4" {% if filters.filter_status == 4 %}selected="selected"{% endif %}>выполнен</option>
+                        </select>
+                        <input class="ml-3 btn btn-outline-primary" type="submit" value="Фильтр" />
+                    </form>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Статус</th>
+                            <th scope="col">Комментарий</th>
+                            <th scope="col">Дата</th>
+                            <th scope="col">Дата доставки</th>
+                            <th scope="col">Клиент</th>
+                            <th scope="col">Газета и упаковка</th>
+                            <th scope="col">Сумма заказа</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orderList %}
+                            <tr>
+                                <th class="align-middle" scope="row">{{ loop.index }}</th>
+                                {% set status = order.status() %}
+                                {% if status == 0%}
+                                    <td class="align-middle"><span class="text-dark" data-order="{{ order.id }}">Новый</span></td>
+                                {% elseif status == 2 %}
+                                    <td class="align-middle"><span class="text-success" data-order="{{ order.id }}"><b>Оплачен</b></span></td>
+                                {% elseif status == 4 %}
+                                    <td class="align-middle"><span class="text-primary" data-order="{{ order.id }}">Выполнен</span></td>
+                                {% endif %}
+                                <td class="align-middle">{{ order.comment }}</td>
+                                <td class="align-middle">{{ order.dateOrder | date('d-m-Y')}}</td>
+                                <td class="align-middle">{{ order.dateDelivery | date('d-m-Y') }}</td>
+                                <td class="align-middle">{{ order.agent }}</td>
+                                <td class="align-middle">
+                                    <ul class="mb-0">
+                                        {% for product in order.products %}
+                                            <li>{{ product.nomenclature.getShortName() }} ({{ product.getDatePaper() | date('d-m-Y') }})</li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </td>
+                                <td class="align-middle">{{ order.summ }}</td>
+                                <td class="text-right">
+                                    <a title="Изменить" href=" {{ path('orders_edit', {'orderId': order.id }) }}"
+                                       class="btn btn-outline-primary">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                    <a title="Удалить" href=" { path('nomen_remove', {'nomenId': nomen.id }) }}"
+                                       class="btn btn-outline-danger">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% include 'orders/pagination.html.twig' with {'base_route' : 'orders'} %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

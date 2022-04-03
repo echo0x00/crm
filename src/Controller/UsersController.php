@@ -40,7 +40,6 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            //$user->setRoles(['ROLE_USER']);
             $em->persist($user);
             $em->flush();
 
@@ -48,7 +47,7 @@ class UsersController extends AbstractController
         }
 
         return $this->render('users/form.html.twig', [
-            'form' => $form->createView()
+            'user_edit' => $form->createView()
         ]);
     }
 }

@@ -27,25 +27,17 @@
                 </div>
             {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Вам газета</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Вам газета: CRM</h1>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
             <label for="inputPassword">Пароль</label>
             <input type="password" name="password" id="inputPassword" class="form-control" required>
-
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
+                    <input type="checkbox" name="_remember_me"> Запомнить меня
                 </label>
             </div>
-            #}
-
             <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
             <p class="mt-5 mb-3 text-muted">© {{ "now"|date("Y") }} Alex</p>
         </form>

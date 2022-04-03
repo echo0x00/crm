@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+{% block title %}Заказ{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row no-gutters">
+        <div class="col-12">
+            <h2 class="lead text-center mt-3 mb-0">
+                {{ title }}
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row no-gutters justify-content-center align-items-center mt-5">
+        <div class="col-12">
+            <form name="order" method="post">
+                <div class="row form-group">
+                    <div class="col">
+                        <label for="date_order" class="required">№</label>
+                        {{ form_widget(order_edit.number, {'attr': {'class': 'form-control', 'id': 'number'}}) }}
+                    </div>
+                    <div class="col">
+                        <label for="date_order" class="required">Дата заказа</label>
+                        {{ form_widget(order_edit.date_order, {'attr': {'class': 'form-control', 'id': 'date_order', 'required': 'required'}}) }}
+                    </div>
+                    <div class="col">
+                        <label for="status" class="required">Статус заказа</label>
+                        {{ form_widget(order_edit.status, {'attr': {'class': 'form-control', 'id': 'status', 'required': 'required'}}) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-8">
+                        <label for="agent" class="required">Заказчик</label>
+                        {{ form_widget(order_edit.agent, {'attr': {'class': 'form-control', 'id': 'agent', 'required': 'required'}}) }}
+                    </div>
+                    <div class="col-4">
+                        <label for="agent" class="required">Дата доставки</label>
+                        {{ form_widget(order_edit.date_delivery, {'attr': {'class': 'form-control', 'id': 'date_delivery', 'required': 'required'}}) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-8">
+                        <label for="agent" class="required">Адрес доставки</label>
+                        {{ form_widget(order_edit.address, {'attr': {'class': 'form-control', 'id': 'address', 'required': 'required'}}) }}
+                    </div>
+                    <div class="col-4">
+                        <label for="agent" class="required">Трек номер</label>
+                        {{ form_widget(order_edit.track_number, {'attr': {'class': 'form-control', 'id': 'track_number'}}) }}
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Номенклатура</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Дата газеты</th>
+                        <th>Дата период</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody class="products" data-prototype="
+                        {{ include('products/partial.html.twig', { 'form': order_edit.products.vars.prototype })|e('html_attr') }}
+                    ">
+                    {% for product in order_edit.products %}
+                        {{ include('products/partial.html.twig', { 'form': product }) }}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row form-group">
+                    <div class="col-10">
+                        <a href="javascript:;" id="addProduct" class="btn btn-outline-primary">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col-2 text-right">
+                        <div><b>Итого: <span id="itogo">0</span> руб.</b></div>
+                        {{ form_widget(order_edit.summ) }}
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="row form-group">
+                    <div class="col-8">
+                        <label for="agent" class="required">Комментарий к заказу</label>
+                        {{ form_widget(order_edit.comment, {'attr': {'class': 'form-control', 'id': 'comment'}}) }}
+                    </div>
+                    <div class="col-4">
+                        <ul>
+                            {% if (order_edit.user_id) %}
+                                <li>
+                                    <label for="agent" class="required mr-3">Создал: </label>
+                                    <span class="ml-2 font-weight-bold">{{ user_creator }}</span>
+                                    {{ form_widget(order_edit.user_id, {'attr': {'class': 'form-control', 'id': 'user_id'}}) }}
+                                </li>
+                            {% endif %}
+                            {% if (user_editor) %}
+                                <li>
+                                    <label for="agent" class="required">Изменил: </label>
+                                    <span class="ml-2 font-weight-bold">{{ user_editor }}</span>
+                                    {{ form_widget(order_edit.editor_id, {'attr': {'class': 'form-control', 'id': 'editor_id'}}) }}
+                                </li>
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mb-5 mt-4 btn">Сохранить</button>
+                </div>
+                {{ form_row(order_edit._token) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

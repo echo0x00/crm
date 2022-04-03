@@ -1,15 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Пользоваетли{% endblock %}
+{% block title %}Пользователи{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #f5f5f5; padding: 2px 6px; }
-    </style>
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <h2 class="lead text-center mt-5">
+                    Новый пользователь
+                </h2>
+            </div>
+        </div>
+    </div>
 
-    <div class="example-wrapper">
-        <h1>Новый пользователь</h1>
-        {{ form(form) }}
+
+    <div class="container">
+        <div class="row no-gutters justify-content-center align-items-center mt-5">
+            <div class="col-6">
+                <form name="user" method="post">
+                    <div class="form-group">
+                        <label for="user_email" class="required">Введите email</label>
+                        <input type="email" id="user_email" name="user[email]" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_fullName" class="required">Имя</label>
+                        <input type="text" id="user_fullName" name="user[fullName]" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="required" for="user_hasRoleAdmin">Права</label>
+                        <select id="user_hasRoleAdmin" name="user[hasRoleAdmin]" class="form-control">
+                            <option value="Yes">Администратор</option>
+                            <option value="No">Пользователь</option>
+                        </select>
+                        <small id="emailHelp" class="form-text text-muted">Администратор умеет создавать пользователей.</small>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="user_plainPassword_first" class="required">Пароль</label>
+                            <input type="password" id="user_plainPassword_first" name="user[plainPassword][first]" required="required" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="user_plainPassword_second" class="required">Повтор пароля</label>
+                            <input type="password" id="user_plainPassword_second" name="user[plainPassword][second]" required="required" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="user_save" name="user[save]" class="btn btn-primary mb-5 mt-4 btn">Сохранить</button>
+                    </div>
+                    {{ form_row(user_edit._token) }}
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}

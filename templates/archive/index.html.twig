@@ -34,21 +34,41 @@
         <div class="col-12">
             <div class="card border-secondary mb-3">
                 <div class="card-header">
-                    <a href="{ path('nomen_create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
+                    <a href="{{ path('archive_create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить</a>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover mb-0">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Дата</th>
+                            <th scope="col">Дата газеты</th>
+{#                            <th scope="col">Газета</th>#}
+{#                            <th scope="col">Количество</th>#}
                             {% for nomen in nomen_list %}
-                                <th scope="col" style="background-color: {{ nomen.color }}">{{ nomen.getShortName() }}</th>
+                                <th scope="col" style="background-color: {{ nomen.color }}">{{ nomen.shortName }}</th>
                             {% endfor %}
                             <!--<th scope="col">Действие</th>-->
                         </tr>
                         </thead>
                         <tbody>
+
+                        {% for arch in archive_list %}
+{#                            {{ dump(arch) }}#}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+
+                                <td>{{ arch.datePaper|date("Y-m-d") }}</td>
+                                {% for nomen in nomen_list %}
+                                    {% if nomen.id == arch.nomenclature %}
+                                        <td>{{ arch.count }}</td>
+                                    {% else %}
+                                        <td>0</td>
+                                    {% endif %}
+                                {% endfor %}
+{#                                <td>{{ arch.title }}</td>#}
+{#                                <td>{{ arch.count }}</td>#}
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

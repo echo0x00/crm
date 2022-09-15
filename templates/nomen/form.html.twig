@@ -18,13 +18,17 @@
             <div class="col-6">
                 <form name="nomenclature" method="post">
                     <div class="row form-group">
-                        <div class="col-10">
+                        <div class="col-6">
                             <label for="nomen_sn" class="required">Наименование <span class="small text-muted">, например ПР</span></label>
                             {{ form_widget(nomenclature_edit.short_name, {'attr': {'class': 'form-control', 'id': 'nomen_sn', 'required': 'required'}}) }}
                         </div>
                         <div class="col-2">
                             <label for="nomen_fn" class="required">Цвет</label>
                             {{ form_widget(nomenclature_edit.color, {'attr': {'class': 'form-control', 'id': 'color', 'required': 'required'}}) }}
+                        </div>
+                        <div class="col-4">
+                            <label for="nomen_pr" class="required">Цена</label>
+                            {{ form_widget(nomenclature_edit.price, {'attr': {'class': 'form-control', 'id': 'price', 'required': 'required'}}) }}
                         </div>
                     </div>
                     <div class="form-group">

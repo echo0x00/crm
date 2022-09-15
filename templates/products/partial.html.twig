@@ -1,8 +1,15 @@
 <tr>
-    <td class="col-md-6">{{ form_widget(form.nomenclature, { 'attr': {'class': 'form-control'} } ) }}</td>
+    <td class="col-md-4">{{ form_widget(form.nomenclature, { 'attr': {'class': 'form-control'} } ) }}</td>
     <td class="col-md-2">{{ form_widget(form.price, { 'attr': {'class': 'form-control'} } ) }}</td>
-    <td class="col-md-2">{{ form_widget(form.count, { 'attr': {'class': 'form-control'} } ) }}</td>
-    <td class="col-md-2">{{ form_widget(form.date_paper, { 'attr': {'class': 'form-control'} } ) }}</td>
-    <td class="col-md-2">{{ form_widget(form.date_end, { 'attr': {'class': 'form-control'} } ) }}</td>
+    <td class="col-md-1">
+        {{ form_widget(form.count, { 'attr': {'class': 'form-control'} } ) }}
+        <p class="text-muted">макс, 5</p>
+    </td>
+    <td class="col-md-2">
+        {{ form_widget(form.date_paper, { 'attr': {'class': 'form-control datepicker-here', 'data-language': 'ru'} } ) }}
+    </td>
+    <td class="col-md-2">
+        {{ form_widget(form.date_end, { 'attr': {'class': 'form-control datepicker-here', 'data-language': 'ru'} } ) }}
+    </td>
     <td><a href="javascript:;" class="removeProduct"><i class="fa fa-times" aria-hidden="true"></i></a></td>
 </tr>

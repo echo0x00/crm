@@ -1,14 +1,22 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ArchiveRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
+use App\Repository\NomenclatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ArchiveRepository::class)
+ *
+ * #ApiResource(
+ *     collectionOperations={"get" = {"archive_context" = {"groups" = "archive:list"}}, "post"},
+ *     itemOperations={"get" = {"archive_context" = {"groups" = "archive:item"}}},
+ *     order={"date_paper" = "DESC", "count" = "DESC"}
+ * )]
  */
-class Archive
+
+class Archive implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -29,6 +37,7 @@ class Archive
 
     /**
      * @ORM\Column(type="datetime")
+     * #Groups({"archive:list", "archive:item"})
      */
     private $date_paper;
 
@@ -40,6 +49,16 @@ class Archive
     public function getNomenclature(): ?Nomenclature
     {
         return $this->nomenclature;
+    }
+
+    public function getNomenclatureId(): ?int
+    {
+        return $this->nomenclature->getId();
+    }
+
+    public function getNomenclatureTitle(): ?string
+    {
+        return $this->nomenclature->getShortName();
     }
 
     public function setNomenclature(?Nomenclature $nomenclature): self
@@ -61,7 +80,12 @@ class Archive
         return $this;
     }
 
-    public function getDatePaper(): ?\DateTimeInterface
+    public function getDatePaperTimestamp()
+    {
+        return $this->date_paper->getTimestamp();
+    }
+
+    public function getDatePaper()
     {
         return $this->date_paper;
     }
@@ -71,5 +95,23 @@ class Archive
         $this->date_paper = $date_paper;
 
         return $this;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return array data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize(): ?array
+    {
+        return [
+            "id" => $this->getId(),
+            "datePaper" => date("Y-m-d", $this->getDatePaperTimestamp()),
+            "count" => $this->getCount(),
+            "nomenclature_id" => $this->getNomenclatureId(),
+            "nomenclature_title" => $this->getNomenclatureTitle()
+        ];
     }
 }

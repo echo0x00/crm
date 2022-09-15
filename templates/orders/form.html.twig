@@ -15,6 +15,11 @@
     <div class="row no-gutters justify-content-center align-items-center mt-5">
         <div class="col-12">
             <form name="order" method="post">
+                <div class="loader-block hidden text-center">
+                    <div class="loader" id="loader">
+                    </div>
+                    <p style="padding-top: 128px!important;">Загрузка...</p>
+                </div>
                 <div class="row form-group">
                     <div class="col">
                         <label for="date_order" class="required">№</label>
@@ -54,7 +59,7 @@
                     <tr>
                         <th>Номенклатура</th>
                         <th>Цена</th>
-                        <th>Количество</th>
+                        <th>Кол-во</th>
                         <th>Дата газеты</th>
                         <th>Дата период</th>
                         <th></th>

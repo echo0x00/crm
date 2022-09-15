@@ -36,15 +36,17 @@ class NomenclatureRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Nomenclature
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getById($value): ?Nomenclature
     {
         return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
+            ->andWhere('n.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Nomenclature;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,7 @@ class NomenclatureType extends AbstractType
         $builder
             ->add('short_name')
             ->add('full_name')
+            ->add('price', IntegerType::class)
             ->add('color', ColorType::class)
         ;
     }

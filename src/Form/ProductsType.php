@@ -7,6 +7,7 @@ use App\Entity\Nomenclature;
 use App\Entity\Products;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,8 @@ class ProductsType extends AbstractType
     {
         $builder
             ->add('count', IntegerType::class, [
-                'data' => 1
+                'data' => 1,
+                'attr' => ['min' => 1]
             ])
             ->add('price')
             ->add('date_paper', DateType::class, [
@@ -26,9 +28,8 @@ class ProductsType extends AbstractType
             ])
             ->add('date_end', DateType::class, [
                 'widget' => 'single_text',
-                'required' => false
+                'required' => false,
             ])
-            //->add('order')
             ->add('nomenclature', EntityType::class, [
                 'class' => Nomenclature::class
             ]);

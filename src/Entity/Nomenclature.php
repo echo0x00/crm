@@ -6,6 +6,7 @@ use App\Repository\NomenclatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
@@ -48,6 +49,11 @@ class Nomenclature
      * @ORM\OneToMany(targetEntity=Archive::class, mappedBy="nomenclature")
      */
     private $archives;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
 
     public function __construct()
     {
@@ -146,6 +152,18 @@ class Nomenclature
                 $archive->setNomenclature(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Запись архива{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <h2 class="lead text-center mt-5">
+                    {{ title }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row no-gutters justify-content-center align-items-center mt-5">
+            <div class="col-8">
+                <form name="archive" method="post">
+                    <div class="row form-group">
+                        <div class="col-4">
+                            <label for="nomen_sn" class="required">Газета <span class="small text-muted">, например ПР</span></label>
+                            {{ form_widget(archive_edit.nomenclature, {'attr': {'class': 'form-control', 'id': 'nomen_sn', 'required': 'required'}}) }}
+                        </div>
+                        <div class="col-4">
+                            <label for="nomen_fn" class="required">Дата</label>
+                            {{ form_widget(archive_edit.date_paper, {'attr': {'class': 'form-control', 'id': 'color', 'required': 'required'}}) }}
+                        </div>
+                        <div class="col-2">
+                            <label for="nomen_fn" class="required">Количество</label>
+                            {{ form_widget(archive_edit.count, {'attr': {'class': 'form-control', 'id': 'nomen_fn', 'required': 'required'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mb-5 mt-4 btn">Сохранить</button>
+                    </div>
+                    {{ form_row(archive_edit._token) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

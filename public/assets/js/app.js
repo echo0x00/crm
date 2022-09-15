@@ -60,7 +60,7 @@ function getDisabledDates(event) {
     let paper = $(this).find(":selected").text()
 
     $('.loader-block').toggleClass("hidden");
-    fetch('//crm.vamgazeta.ru/api/archives/get-by-paper/' + encodeURIComponent(paper) + '?token=f72R2yQLZEc@rqF2vSB9pHa_iq')
+    fetch('//crm.vamgazeta.ru/api/archives/get-by-paper/' + encodeURIComponent(paper) + '?token=')
         .then(resp => resp.json())
         .then(array => {
             $('.loader-block').toggleClass("hidden");

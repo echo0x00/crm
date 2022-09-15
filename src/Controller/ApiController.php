@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApiController extends AbstractController
 {
-    static $TOKEN = 'f72R2yQLZEc@rqF2vSB9pHa_iq';
+    static $TOKEN = 'edited';
 
 //    public function index(): Response
 //    {
@@ -39,6 +39,30 @@ class ApiController extends AbstractController
         } else {
             return $this->response([]);
         }
+    }
+
+    /**
+     * @param ArchiveRepository $arRepository
+     * @param $title
+     * @return JsonResponse
+     * @Route("/archives/get-by-date/{date}", name="archives_api_get_by_date", methods={"GET"})
+     */
+    public function getByDate(Request $request, ArchiveRepository $arRepository, $date): JsonResponse
+    {
+        $token = $request->query->get('token');
+        if ($token !== self::$TOKEN) {
+            return $this->response([]);
+        }
+        $post = $arRepository->findByDate($date);
+
+        if (!$post){
+//            $data = [
+//                'status' => 404,
+//                'errors' => "Post not found",
+//            ];
+            return $this->response([]);
+        }
+        return $this->response($post);
     }
 
     /**

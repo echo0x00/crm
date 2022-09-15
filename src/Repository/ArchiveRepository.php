@@ -19,6 +19,32 @@ class ArchiveRepository extends ServiceEntityRepository
         parent::__construct($registry, Archive::class);
     }
 
+    public function findByDate($date_paper) {
+        $nb = $this->getEntityManager()->createQueryBuilder();
+        $nb->select(
+            'nm.full_name as nomen',
+            'nm.price as price',
+            'DATE(ar.date_paper) as datePaper',
+            'SUM(ar.count) as count')
+            ->from(Archive::class, 'ar')
+            ->where('ar.date_paper LIKE :date_paper')
+            ->setParameter('date_paper',   $date_paper[0] . '%')
+            ->leftJoin(Nomenclature::class, 'nm', 'WITH', "nm.id = ar.nomenclature")
+            ->groupBy('ar.date_paper')
+            ->groupBy('nomen')
+            ->groupBy('price')
+            ->orderBy("ar.date_paper", "ASC");
+
+        $result = $nb->getQuery()->execute() ;
+//        return [$nb->getQuery()->getSQL()];
+        $lastElem = count($result);
+        if ($lastElem > 0) {
+            return ["dates"=>$result];
+        } else {
+            return [];
+        }
+    }
+
     public function findByNomenclatureTitle($title) {
         $nb = $this->getEntityManager()->createQueryBuilder();
 
